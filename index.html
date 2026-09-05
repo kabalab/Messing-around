@@ -1,0 +1,46 @@
+<head>
+  <title>Home</title>
+  <style>
+    body {
+        background-color: black;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+        gap: 2em;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    button{
+        background-color: darkslategray;
+        color:rgb(204, 204, 204);
+        font-size: 3em;
+        font-family: 'Times New Roman', Times, serif;
+        border:none;
+    }
+
+    button:active{
+        background-color: rgb(70, 55, 55);
+    }
+
+  </style>
+</head>
+<body>
+    <script>
+        const pages = ["Illusion.html"];
+
+        pages.forEach(page => {
+            const button = document.createElement("button");
+            button.textContent = page.slice(0, -5);
+            button.onclick = function(){
+                selectHtml(page);
+            };
+            document.body.appendChild(button)
+        });
+
+        function selectHtml(link){
+            window.location.href = link
+        }
+    </script>
+</body>

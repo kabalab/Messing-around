@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<head>
+  <title>Testeringalba</title>
+  
+  <style>
+    body{
+        background-color: black;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        height:100vh;
+        margin: 0;
+    }
+
+    div{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        width: 90cqw;
+        height: 90cqh;
+    }
+
+    div div{
+        width: 90%;
+        height: 90%;
+    }
+
+    button{
+        width: 90%;
+        height: 90%;
+        border: none;
+    }
+
+  </style>
+</head>
+<body>
+
+    <script>
+
+        let divs = [];
+
+        let runing = false;
+
+        setUpInception(25);
+
+        function setUpInception(numberOfDivs){
+            document.body.style.backgroundColor = randomColor();
+            let previousDiv;
+            let currentDiv = document.createElement("div");
+            currentDiv.style.backgroundColor = randomColor();
+            currentDiv.id = 1;
+            divs.push(currentDiv);
+            document.body.append(currentDiv);
+            for (let i = 1;i < numberOfDivs-1;i++){
+                previousDiv = currentDiv;
+                currentDiv = document.createElement("div");  
+                currentDiv.id = i + 1;
+                currentDiv.style.backgroundColor = randomColor();
+                previousDiv.appendChild(currentDiv);
+                divs.push(currentDiv);
+            }
+
+            const final = document.createElement("button");
+            final.id = numberOfDivs;
+            final.style.backgroundColor = "rgb(0,0,0)";
+            final.onclick = function() {cycler();};
+            divs.push(final);
+            currentDiv.appendChild(final);
+
+            alert("Click black box in the middle to start can disable by clicking again");
+
+        }
+
+        function cycle(){
+            if (divs.length < 2) return alert("Not enough divs intiated");
+
+            let currentDiv;
+            let nextDiv = divs[0];
+            document.body.style.backgroundColor = getComputedStyle(nextDiv).backgroundColor;
+
+            for (let i = 1;i < divs.length-1;i++){
+                currentDiv = nextDiv;
+                nextDiv = divs[i];
+                currentDiv.style.backgroundColor = getComputedStyle(nextDiv).backgroundColor;
+                if (i == divs.length - 2){
+                    nextDiv.style.backgroundColor = randomColor();
+                }
+            }
+        }
+
+        function cycler(){
+            runing = !runing;
+            console.log(runing)
+            if (runing){
+                timer(cycle,100);
+            }
+        }
+
+        function timer(method,time = 1000,times = 0){
+            let timesGone = 0;
+            const timer = setInterval(() => {
+                timesGone ++;
+                if (!runing || timesGone == times) return clearInterval(timer);
+                console.log(runing + " timer");
+                method();
+
+            },time);
+        }
+
+        function randomColor(){
+            return `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`
+        }
+
+    </script>
+</body>
