@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<head>
+    <title>testalineryino</title>
+
+    <style>
+        body{
+            background-color: black;
+            display:grid;
+            justify-content: center;
+            justify-items: center;
+            align-items: center;
+            height:100vh;
+            margin: 0;
+        }
+
+        div{
+            background-color: darkslategray;
+        }
+    </style>
+</head>
+<body>
+    <script>
+
+        buildGrid(50,50);
+
+        function buildGrid(width,height){
+            const gap = ((window.innerWidth + window.innerHeight) / 2 * 0.9 / width / 10);
+            const widthSize = Math.floor((window.innerWidth - (width - 1) * gap) / width);
+            const heightSize = Math.floor((window.innerHeight - (height - 1) * gap) / height);
+            document.body.style.gridTemplateColumns = `repeat(${width}, ${widthSize}px)`;
+            document.body.style.gap = gap + "px";
+            for (let y = 0; y < height;y++){
+                for (let x = 0; x < width;x++){
+                    let grid = document.createElement("div");
+                    grid.style.width = widthSize + "px";
+                    grid.style.height = heightSize + "px";
+                    grid.dataset.x = x;
+                    grid.dataset.y = y;
+                    grid.addEventListener("mouseenter", function(event) {
+                        selector(x,y);
+                    });
+                    document.body.appendChild(grid);
+                }
+            }
+        }
+
+        function selector(x = -1,y = -1){
+            if (x == -1 && y == -1){
+                return alert("Cant select nothing");
+            } else {
+                document.querySelectorAll("div").forEach(div => {
+                    div.style.backgroundColor = "darkslategray"
+                });
+            }
+
+            if (x != -1){
+                document.querySelectorAll(`div[data-x="${x}"]`).forEach(div => {
+                    div.style.backgroundColor = "rgb(21, 136, 136)"
+                });
+            }
+            if (y != -1){
+                document.querySelectorAll(`div[data-y="${y}"]`).forEach(div => {
+                    div.style.backgroundColor = "rgb(21, 136, 136)"
+                });
+            }
+            if (x != -1 && y != -1){
+                document.querySelectorAll(`div[data-x="${x}"][data-y="${y}"]`).forEach(div => {
+                    div.style.backgroundColor = "rgb(57, 214, 214)"
+                });    
+            }
+
+        }
+    </script>
+</body>

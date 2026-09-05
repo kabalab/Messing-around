@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+    <title>Bloamboandogitblozo</title>
+    <style>
+        body{
+            background-color: black;
+            display: flex;
+        }
+        div{
+            background-color: darkslategray;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+    
+        class moveableSquare {
+            constructor(x,y,size){
+                this.x = x;
+                this.y = y;
+                this.size = size;
+                this.object = document.createElement("div");
+                this.object.style.width = size + "px";
+                this.object.style.height = size + "px";
+                this.updatePostion();
+                this.timer(this,this.moveX,1000,10);
+            }
+            
+        moveX(amount){
+            this.x += amount;
+            if (this.x < 0) this.x = 0;
+            if (this.x > window.innerWidth - this.size) this.x = window.innerWidth - this.size;
+            this.updatePostion();
+        }
+
+        updatePostion(){
+            this.object.style.left = this.x + "px";
+            this.object.style.top = this.y + "px";
+        }
+
+        timer(method,time = 1000,times = 0){
+            let timesGone = 0;
+            const timer = setInterval(() => {
+                timesGone ++;
+                if (timesGone == times) return clearInterval(timer);
+                this.moveX(25);
+
+            },time);
+        }
+
+    }
+    
+    boot();
+
+    function boot(){
+        let square = new moveableSquare(window.innerWidth/2,window.innerHeight/2,100);
+        document.body.appendChild(square.object);
+    }
+
+
+    </script>
+</body>
